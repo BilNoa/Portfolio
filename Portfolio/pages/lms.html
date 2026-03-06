@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plateforme LMS — Noa Bilong</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #0d0d0d; --surface: #161616; --surface2: #1e1e1e; --border: rgba(255,255,255,0.07); --text: #f0ede8; --muted: #8a8580; --accent: #c8f060; --accent2: #60c8f0; --font-display: 'Syne', sans-serif; --font-body: 'DM Sans', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+        body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; opacity: 0.4; }
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 20px 48px; background: rgba(13,13,13,0.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+        .nav-back { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 500; transition: color 0.2s; }
+        .nav-back:hover { color: var(--text); }
+        .nav-back svg { transition: transform 0.2s; }
+        .nav-back:hover svg { transform: translateX(-3px); }
+        .nav-name { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--muted); }
+        .hero { padding: 130px 48px 60px; max-width: 1000px; margin: 0 auto; }
+        .hero-cat { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+        .hero-cat::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--accent); }
+        .hero h1 { font-family: var(--font-display); font-size: clamp(34px, 5vw, 60px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; margin-bottom: 22px; }
+        .hero p.lead { color: var(--muted); font-size: 17px; max-width: 620px; margin-bottom: 32px; }
+        .meta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px; }
+        .meta-chip { display: flex; align-items: center; gap: 7px; background: var(--surface); border: 1px solid var(--border); border-radius: 100px; padding: 7px 16px; font-size: 13px; color: var(--muted); }
+        .meta-chip strong { color: var(--text); }
+        .tech-badge { background: rgba(96,200,240,0.08); border: 1px solid rgba(96,200,240,0.2); color: var(--accent2); font-size: 12px; font-weight: 600; padding: 5px 13px; border-radius: 100px; }
+        .cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 60px; }
+        .btn { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; font-family: var(--font-display); font-size: 13px; font-weight: 700; padding: 12px 24px; border-radius: 100px; border: 1px solid transparent; transition: all 0.22s; }
+        .btn svg { transition: transform 0.22s; }
+        .btn-primary { background: var(--accent); color: #0d0d0d; }
+        .btn-primary:hover { background: #d4f570; transform: translateY(-2px); box-shadow: 0 6px 24px rgba(200,240,96,0.2); }
+        .btn-primary:hover svg { transform: rotate(-8deg); }
+        .btn-ghost { background: var(--surface); border-color: var(--border); color: var(--text); }
+        .btn-ghost:hover { background: var(--surface2); transform: translateY(-2px); border-color: rgba(255,255,255,0.15); }
+        .cover { max-width: 1000px; margin: 0 auto 70px; padding: 0 48px; }
+        .cover-placeholder { width: 100%; height: 380px; background: var(--surface); border: 2px dashed rgba(200,240,96,0.15); border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; color: var(--muted); font-size: 14px; }
+        .cover-placeholder .icon { width: 56px; height: 56px; opacity: 0.2; }
+        .cover img { width: 100%; border-radius: 20px; border: 1px solid var(--border); max-height: 480px; object-fit: cover; display: block; }
+        .layout { max-width: 1000px; margin: 0 auto; padding: 0 48px 100px; display: grid; grid-template-columns: 1fr 320px; gap: 48px; align-items: start; }
+        .main { display: flex; flex-direction: column; gap: 50px; }
+        .block h2 { font-family: var(--font-display); font-size: 20px; font-weight: 700; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+        .block p { color: var(--muted); font-size: 15px; line-height: 1.8; margin-bottom: 12px; }
+        .block ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+        .block ul li { color: var(--muted); font-size: 15px; padding-left: 22px; position: relative; }
+        .block ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 12px; top: 4px; }
+        .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+        .gitem { border-radius: 12px; overflow: hidden; border: 1px solid var(--border); cursor: pointer; transition: transform 0.3s, border-color 0.3s; }
+        .gitem:hover { transform: scale(1.02); border-color: rgba(200,240,96,0.3); }
+        .gitem img { width: 100%; height: 170px; object-fit: cover; display: block; }
+        .gitem .ph { width: 100%; height: 170px; background: var(--surface2); display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 13px; }
+        .gitem .cap { padding: 8px 12px; font-size: 12px; color: var(--muted); background: var(--surface); }
+        .sidebar { display: flex; flex-direction: column; gap: 18px; position: sticky; top: 90px; }
+        .scard { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px; transition: border-color 0.3s; }
+        .scard:hover { border-color: rgba(200,240,96,0.15); }
+        .scard h3 { font-family: var(--font-display); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+        .srow { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+        .srow:last-child { border-bottom: none; }
+        .srow .l { color: var(--muted); }
+        .srow .v { font-weight: 500; text-align: right; }
+        .srow .v.ok { color: var(--accent); }
+        .pills { display: flex; flex-wrap: wrap; gap: 7px; }
+        .pill { background: var(--surface2); border: 1px solid var(--border); color: var(--text); font-size: 12px; padding: 4px 11px; border-radius: 100px; }
+        .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 1000; align-items: center; justify-content: center; padding: 40px; }
+        .lightbox.open { display: flex; }
+        .lightbox img { max-width: 90vw; max-height: 85vh; border-radius: 12px; object-fit: contain; }
+        .lb-close { position: absolute; top: 24px; right: 30px; background: none; border: none; color: var(--muted); font-size: 36px; cursor: pointer; transition: color 0.2s; line-height: 1; }
+        .lb-close:hover { color: var(--text); }
+        .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        footer { border-top: 1px solid var(--border); padding: 28px 48px; text-align: center; color: var(--muted); font-size: 13px; }
+        @media (max-width: 768px) { .hero, .cover, .layout { padding-left: 24px; padding-right: 24px; } .layout { grid-template-columns: 1fr; } .sidebar { position: static; } nav { padding: 16px 24px; } .gallery { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+<nav>
+    <a href="index.html" class="nav-back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg> Retour au portfolio</a>
+    <span class="nav-name">Noa Bilong</span>
+</nav>
+
+<div class="hero">
+    <div class="hero-cat">Angular · NodeJs Express · PostgreSQL</div>
+    <h1>Plateforme web LMS</h1>
+    <p class="lead">Réalisation complète d'une plateforme LMS (Learning Management System) lors de mon stage chez CMS Informatic — de l'analyse des besoins jusqu'au déploiement.</p>
+    <div class="meta-row">
+        <div class="meta-chip"><strong>Contexte</strong> — Stage · CMS Informatic</div>
+        <div class="meta-chip"><strong>Durée</strong> — Avr. – Juin 2025</div>
+        <div class="meta-chip"><strong>Équipe</strong> — Solo</div>
+        <span class="tech-badge">HTML/CSS</span>
+        <span class="tech-badge">JavaScript</span>
+        <span class="tech-badge">TypeScript</span>
+        <span class="tech-badge">MySQL</span>
+        <span class="tech-badge">Botpress</span>
+        <span class="tech-badge">Mistral AI</span>
+    </div>
+</div>
+
+<div class="cover reveal">
+    <div class="cover-placeholder">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        <img src="../images/LMS_GLobal.png" alt="Vue dashboard">
+    </div>
+</div>
+
+<div class="layout">
+    <div class="main">
+        <div class="block reveal">
+            <h2>Présentation du projet</h2>
+            <p>Dans le cadre de mon stage chez CMS Informatic (avril – juin 2025), j'ai développé de A à Z une plateforme LMS (Learning Management System) destinée à la gestion de contenus de formation en ligne. Le projet couvre l'intégralité du cycle de développement : analyse des besoins client, conception de l'architecture (front-end, back-end, base de données) et développement d'un prototype fonctionnel.</p>
+            <p>La plateforme propose un système d'inscription sécurisé, des modules de calcul interactifs accessibles après connexion, ainsi qu'un espace administrateur complet.</p>
+            <p>
+                J’ai également intégré un chatbot intelligent permettant la suggestion de modules de formation selon le besoin de l'utilisateur au sein de la plateforme en utilisant 
+                Botpress. Celui-ci est connecté à l’API Mistral afin de générer des réponses 
+                contextualisées et dynamiques. Cette intégration m’a permis de travailler sur la 
+                gestion des appels API, le traitement des requêtes utilisateurs et l’orchestration 
+                des échanges entre le front-end, le serveur et le modèle d’IA.
+            </p>
+        </div>
+        <div class="block reveal">
+            <h2>Fonctionnalités développées</h2>
+            <ul>
+                <li>Système d'inscription et de connexion </li>
+                <li>Insertion des tutoriels directement sur la plateforme via l'intégration d'un logiciel de traitement de texte </li>
+                <li>Tutoriels office accessibles uniquement aux utilisateurs ayant payé le module correspondant</li>
+                <li>Espace de gestion du profil </li>
+                <li>Interface d'administration : gestion des comptes, d'accès</li>
+            </ul>
+        </div>
+        <div class="block reveal">
+            <h2>Architecture technique</h2>
+                <p>
+                    Le projet repose sur une architecture front-end / back-end moderne. 
+                    Le front-end a été développé avec Angular, permettant la création d’une 
+                    interface dynamique et modulaire basée sur des composants. 
+                </p>
+                <p>
+                    Le back-end est construit avec Node.js et Express, assurant la gestion 
+                    des routes API, la logique métier et la communication avec la base de données. 
+                    Cette séparation claire des responsabilités permet une application  
+                    maintenable et performante.
+                </p>
+               
+        </div>
+        <div class="block reveal">
+            <h2>Captures d'écran</h2>
+            <div class="gallery">
+                <div class="gitem" onclick="openLb(this)"><div class="ph"><img src="../images/LMS_Modules.png" alt="Vue dashboard"></div><div class="cap">Liste des modules (vue administrateur)</div></div>
+                <div class="gitem" onclick="openLb(this)"><div class="ph"><img src="../images/LMS_Texte.png" alt="Vue dashboard"></div><div class="cap">Ajout contenu aux modules</div></div>
+                <div class="gitem" onclick="openLb(this)"><div class="ph"><img src="../images/LMS_ajout.png" alt="Vue dashboard"></div><div class="cap">Ajout utilisateurs</div></div>
+                <div class="gitem" onclick="openLb(this)"><div class="ph"><img src="../images/LMS_liste.png" alt="Vue dashboard"></div><div class="cap">Liste utilisateurs</div></div>
+            </div>
+        </div>
+        <div class="block reveal">
+            <h2>Ce que j'ai appris</h2>
+            <p>Ce stage m'a permis d'appréhender le développement web dans un contexte professionnel réel : interaction avec le client et respect d'un cahier des charges. J'ai renforcé mes compétences en JavaScript, en gestion de bases de données PostgreSQL, et j'ai découvert les enjeux de sécurité web (injections SQL, gestion des sessions).</p>
+        </div>
+    </div>
+    <div class="sidebar">
+        <div class="scard reveal">
+            <h3>Informations</h3>
+            <div class="srow"><span class="l">Contexte</span><span class="v">Stage professionnel</span></div>
+            <div class="srow"><span class="l">Entreprise</span><span class="v">CMS Informatic</span></div>
+            <div class="srow"><span class="l">Période</span><span class="v">Avr. – Juin 2025</span></div>
+            <div class="srow"><span class="l">Équipe</span><span class="v">Solo</span></div>
+            <div class="srow"><span class="l">Statut</span><span class="v ok">✓ Terminé</span></div>
+        </div>
+        <div class="scard reveal">
+            <h3>Technologies</h3>
+            <div class="pills">
+                <span class="pill">HTML</span><span class="pill">CSS</span><span class="pill">Angular</span><span class="pill">PostgreSQL</span><span class="pill">JavaScript</span><span class="pill">NodeJs</span><span class="pill">Mistral</span><span class="pill">Botpress</span>
+            </div>
+        </div>
+        <div class="scard reveal">
+            <h3>Compétences</h3>
+            <div class="pills">
+                <span class="pill">Sécurité web</span><span class="pill">Déploiement</span><span class="pill">Base de données</span><span class="pill">Gestion de projet</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="lightbox" id="lb" onclick="closeLb()"><button class="lb-close">×</button><img id="lb-img" src="" alt=""></div>
+<footer><p>© 2026 Noa Bilong</p></footer>
+<script>
+    const reveals = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver(entries => { entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 70); obs.unobserve(e.target); } }); }, { threshold: 0.08 });
+    reveals.forEach(el => obs.observe(el));
+    function openLb(el) { const img = el.querySelector('img'); if (!img) return; document.getElementById('lb-img').src = img.src; document.getElementById('lb').classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function closeLb() { document.getElementById('lb').classList.remove('open'); document.body.style.overflow = ''; }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+</script>
+</body>
+</html>

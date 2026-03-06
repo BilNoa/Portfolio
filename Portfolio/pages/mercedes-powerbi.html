@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapport Power BI - Pilotage Après-Vente Mercedes - Noa Bilong</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #0d0d0d; --surface: #161616; --surface2: #1e1e1e; --border: rgba(255,255,255,0.07); --text: #f0ede8; --muted: #8a8580; --accent: #c8f060; --accent2: #60c8f0; --font-display: 'Syne', sans-serif; --font-body: 'DM Sans', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+        body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; opacity: 0.4; }
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 20px 48px; background: rgba(13,13,13,0.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+        .nav-back { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 500; transition: color 0.2s; }
+        .nav-back:hover { color: var(--text); }
+        .nav-back svg { transition: transform 0.2s; }
+        .nav-back:hover svg { transform: translateX(-3px); }
+        .nav-name { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--muted); }
+        .hero { padding: 130px 48px 60px; max-width: 1000px; margin: 0 auto; }
+        .hero-cat { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+        .hero-cat::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--accent); }
+        .hero h1 { font-family: var(--font-display); font-size: clamp(34px, 5vw, 60px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; margin-bottom: 22px; }
+        .hero p.lead { color: var(--muted); font-size: 17px; max-width: 620px; margin-bottom: 32px; }
+        .meta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px; }
+        .meta-chip { display: flex; align-items: center; gap: 7px; background: var(--surface); border: 1px solid var(--border); border-radius: 100px; padding: 7px 16px; font-size: 13px; color: var(--muted); }
+        .meta-chip strong { color: var(--text); }
+        .tech-badge { background: rgba(96,200,240,0.08); border: 1px solid rgba(96,200,240,0.2); color: var(--accent2); font-size: 12px; font-weight: 600; padding: 5px 13px; border-radius: 100px; }
+        .cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 60px; }
+        .btn { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; font-family: var(--font-display); font-size: 13px; font-weight: 700; padding: 12px 24px; border-radius: 100px; border: 1px solid transparent; transition: all 0.22s; }
+        .btn svg { transition: transform 0.22s; }
+        .btn-primary { background: var(--accent); color: #0d0d0d; }
+        .btn-primary:hover { background: #d4f570; transform: translateY(-2px); box-shadow: 0 6px 24px rgba(200,240,96,0.2); }
+        .btn-ghost { background: var(--surface); border-color: var(--border); color: var(--text); }
+        .btn-ghost:hover { background: var(--surface2); transform: translateY(-2px); }
+        .cover { max-width: 1000px; margin: 0 auto 70px; padding: 0 48px; }
+        .cover-placeholder { width: 100%; height: 380px; background: var(--surface); border: 2px dashed rgba(200,240,96,0.15); border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; color: var(--muted); font-size: 14px; }
+        .cover-placeholder .icon { width: 56px; height: 56px; opacity: 0.2; }
+        .layout { max-width: 1000px; margin: 0 auto; padding: 0 48px 100px; display: grid; grid-template-columns: 1fr 320px; gap: 48px; align-items: start; }
+        .main { display: flex; flex-direction: column; gap: 50px; }
+        .block h2 { font-family: var(--font-display); font-size: 20px; font-weight: 700; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+        .block p { color: var(--muted); font-size: 15px; line-height: 1.8; margin-bottom: 12px; }
+        .block ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+        .block ul li { color: var(--muted); font-size: 15px; padding-left: 22px; position: relative; }
+        .block ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 12px; top: 4px; }
+        .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+        .gitem { border-radius: 12px; overflow: hidden; border: 1px solid var(--border); cursor: pointer; transition: transform 0.3s, border-color 0.3s; }
+        .gitem:hover { transform: scale(1.02); border-color: rgba(200,240,96,0.3); }
+        .gitem img { width: 100%; height: 170px; object-fit: cover; display: block; }
+        .gitem .ph { width: 100%; height: 170px; background: var(--surface2); display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 13px; }
+        .gitem .cap { padding: 8px 12px; font-size: 12px; color: var(--muted); background: var(--surface); }
+        .sidebar { display: flex; flex-direction: column; gap: 18px; position: sticky; top: 90px; }
+        .scard { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px; }
+        .scard h3 { font-family: var(--font-display); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+        .srow { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+        .srow:last-child { border-bottom: none; }
+        .srow .l { color: var(--muted); }
+        .srow .v { font-weight: 500; text-align: right; }
+        .srow .v.ok { color: var(--accent); }
+        .pills { display: flex; flex-wrap: wrap; gap: 7px; }
+        .pill { background: var(--surface2); border: 1px solid var(--border); color: var(--text); font-size: 12px; padding: 4px 11px; border-radius: 100px; }
+        .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 1000; align-items: center; justify-content: center; padding: 40px; }
+        .lightbox.open { display: flex; }
+        .lightbox img { max-width: 90vw; max-height: 85vh; border-radius: 12px; object-fit: contain; }
+        .lb-close { position: absolute; top: 24px; right: 30px; background: none; border: none; color: var(--muted); font-size: 36px; cursor: pointer; line-height: 1; }
+        .lb-close:hover { color: var(--text); }
+        .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        footer { border-top: 1px solid var(--border); padding: 28px 48px; text-align: center; color: var(--muted); font-size: 13px; }
+        @media (max-width: 768px) { .hero, .cover, .layout { padding-left: 24px; padding-right: 24px; } .layout { grid-template-columns: 1fr; } .sidebar { position: static; } nav { padding: 16px 24px; } .gallery { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+<nav>
+    <a href="index.html" class="nav-back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg> Retour au portfolio</a>
+    <span class="nav-name">Noa Bilong</span>
+</nav>
+<div class="hero">
+    <div class="hero-cat">Power BI · Power Query · SharePoint · Data Visualisation</div>
+    <h1>Rapport Power BI<br>Pilotage Après-Vente Mercedes</h1>
+    <p class="lead">
+    Développement d’un tableau de bord interactif pour les directeurs après-vente Mercedes permettant le suivi des performances des 12 sites : chiffre d’affaires, productivité atelier, marges pièces et indicateurs N vs N-1 avec actualisation automatisée des données.
+    </p>
+    <div class="meta-row">
+        <div class="meta-chip"><strong>Contexte</strong> — Projet professionnel</div>
+        <div class="meta-chip"><strong>Client</strong> — Mercedes</div>
+        <div class="meta-chip"><strong>Utilisateurs</strong> — ~25 managers</div>
+        <span class="tech-badge">Power BI</span>
+        <span class="tech-badge">Power Query</span>
+    </div>
+</div>
+<div class="cover reveal">
+    <div class="cover-placeholder">
+        <img src="../images/Mercedes_Global.png" alt="Vue dashboard" 
+     style="width: 100%; max-height: 380px; object-fit: contain; border-radius: 18px; display: block;">
+    </div>
+</div>
+<div class="layout">
+    <div class="main">
+        <div class="block reveal">
+            <h2>Présentation du projet</h2>
+                <p>
+                Ce projet a pour objectif la mise en place d’un rapport Power BI destiné aux directeurs après-vente Mercedes. 
+                Il remplace un pilotage basé sur des fichiers Excel issus d’extractions manuelles du DMS (Autoline), jugé trop chronophage.
+                </p>
+                <p>
+                L’objectif est d’automatiser la collecte, la transformation et la visualisation des données afin d’améliorer la rapidité d’analyse et la prise de décision sur l’ensemble des 12 sites.
+                </p>
+                <p>
+                Pour des raisons de confidentialité, les captures d’écran présentées ont été réalisées à partir de données de test 
+                et ne contiennent aucune donnée réelle de l’entreprise.
+                </p>
+        </div>
+        <div class="block reveal">
+            <h2>Architecture et flux de données</h2>
+            <ul>
+                <li>Extraction automatique nocturne des données du DMS</li>
+                <li>Transformation et nettoyage des données avec Power Query</li>
+                <li>Modélisation des tables et relations dans Power BI</li>
+                <li>Mise à jour automatique du rapport à partir de la source</li>
+            </ul>
+        </div>
+        <div class="block reveal">
+            <h2>Indicateurs et visuels développés</h2>
+                <ul>
+                    <li>Chiffre d’affaires global, atelier et magasin (N vs N-1)</li>
+                    <li>Productivité et improductivité atelier</li>
+                    <li>Taux de facturation</li>
+                    <li>Marge pièces et CA par code CPV</li>
+                    <li>Encours heures atelier et encours pièces</li>
+                    <li>Filtres dynamiques : site, période, Business Unit, marque, client</li>
+                </ul>
+        </div>
+        <div class="block reveal">
+            <h2>Captures d'écran</h2>
+                <div class="gitem" onclick="openLb(this)">
+                    <img src="../images/rapport_Mercedes_CA.png" alt="Vue dashboard">
+                    <div class="cap">Page CA global N vs N-1</div>
+                </div>
+                <div class="gitem" onclick="openLb(this)">
+                    <img src="../images/rapport_Mercedes_CA_Ateliers.png" alt="Vue dashboard">
+                    <div class="cap">Page CA par atelier N vs N-1</div>
+                </div>
+                <div class="gitem" onclick="openLb(this)">
+                    <img src="../images/Mercedes_nbEntree.png" alt="Vue dashboard">
+                    <div class="cap">Page nombre d'entrée global N vs N-1</div>
+                </div>
+        </div>
+        <div class="block reveal">
+            <h2>Ce que j'ai appris</h2>
+                <p>
+                Ce projet m’a permis d’approfondir la modélisation de données orientée décisionnel, la création d’indicateurs métier pertinents et la conception de dashboards professionnels adaptés à des utilisateurs managers. 
+                J’ai également développé une vision plus stratégique de la data, centrée sur l’aide à la décision.
+                </p>
+            </div>
+    </div>
+    <div class="sidebar">
+        <div class="scard reveal">
+            <h3>Informations</h3>
+                <div class="srow"><span class="l">Contexte</span><span class="v">Projet client</span></div>
+                <div class="srow"><span class="l">Année</span><span class="v">2026</span></div>
+                <div class="srow"><span class="l">Utilisateurs</span><span class="v">~25 managers</span></div>
+                <div class="srow"><span class="l">Sites analysés</span><span class="v">12</span></div>
+                <div class="srow"><span class="l">Statut</span><span class="v ok">✓ Terminé</span></div>
+        </div>
+        <div class="scard reveal">
+            <h3>Technologies</h3>
+            <div class="pills">
+                <span class="pill">Power BI Desktop</span>
+                <span class="pill">Power BI Service</span>
+                <span class="pill">Power Query</span>
+            </div>
+        <div class="scard reveal">
+            <h3>Compétences</h3>
+            <div class="pills">
+                <span class="pill">Data Visualisation</span>
+                <span class="pill">Data Modeling</span>
+                <span class="pill">Analyse métier</span>
+                <span class="pill">Dashboarding</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="lightbox" id="lb" onclick="closeLb()"><button class="lb-close">×</button><img id="lb-img" src="" alt=""></div>
+<footer><p>© 2026 Noa Bilong</p></footer>
+<script>
+    const reveals = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver(entries => { entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 70); obs.unobserve(e.target); } }); }, { threshold: 0.08 });
+    reveals.forEach(el => obs.observe(el));
+    function openLb(el) { const img = el.querySelector('img'); if (!img) return; document.getElementById('lb-img').src = img.src; document.getElementById('lb').classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function closeLb() { document.getElementById('lb').classList.remove('open'); document.body.style.overflow = ''; }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+</script>
+</body>
+</html>
